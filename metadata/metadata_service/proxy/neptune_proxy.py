@@ -10,8 +10,8 @@ import boto3
 import gremlin_python.driver.protocol
 import requests
 from amundsen_gremlin.gremlin_model import WellKnownProperties
-from amundsen_gremlin.neptune_bulk_loader.api import (
-    NeptuneBulkLoaderApi, get_neptune_graph_traversal_source_factory)
+# from amundsen_gremlin.neptune_bulk_loader.api import (
+#     NeptuneBulkLoaderApi, get_neptune_graph_traversal_source_factory)
 from amundsen_gremlin.script_translator import ScriptTranslatorTargetNeptune
 from amundsen_gremlin.test_and_development_shard import get_shard
 from for_requests.assume_role_aws4auth import AssumeRoleAWS4Auth
@@ -106,12 +106,12 @@ class NeptuneGremlinProxy(AbstractGremlinProxy):
         except Exception:
             raise NotImplementedError(f'Cannot find s3 bucket name!')
 
-        # Instantiate bulk loader and graph traversal factory
-        bulk_loader_config: Dict[str, Any] = dict(NEPTUNE_SESSION=password, NEPTUNE_URL=host,
-                                                  NEPTUNE_BULK_LOADER_S3_BUCKET_NAME=s3_bucket_name)
-        self.neptune_bulk_loader_api = NeptuneBulkLoaderApi.create_from_config(bulk_loader_config)
-        self.neptune_graph_traversal_source_factory = get_neptune_graph_traversal_source_factory(session=password,
-                                                                                                 neptune_url=host)
+        # # Instantiate bulk loader and graph traversal factory
+        # bulk_loader_config: Dict[str, Any] = dict(NEPTUNE_SESSION=password, NEPTUNE_URL=host,
+        #                                           NEPTUNE_BULK_LOADER_S3_BUCKET_NAME=s3_bucket_name)
+        # self.neptune_bulk_loader_api = NeptuneBulkLoaderApi.create_from_config(bulk_loader_config)
+        # self.neptune_graph_traversal_source_factory = get_neptune_graph_traversal_source_factory(session=password,
+        #                                                                                          neptune_url=host)
 
         AbstractGremlinProxy.__init__(self, key_property_name='key',
                                       driver_remote_connection_options=driver_remote_connection_options)
