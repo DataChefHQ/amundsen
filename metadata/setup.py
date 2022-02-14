@@ -26,7 +26,7 @@ rds = ['amundsen-rds==0.0.6',
        'sqlalchemy>=1.3.6,<1.4',
        'alembic>=1.2,<2.0']
 gremlin = [
-    'amundsen-gremlin>=0.0.9',
+    # 'amundsen-gremlin>=0.0.9',
     'gremlinpython==3.5.1',
     'tornado>=4.4.1,<6.0'
 ]
