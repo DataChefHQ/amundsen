@@ -27,7 +27,7 @@ rds = ['amundsen-rds==0.0.6',
        'alembic>=1.2,<2.0']
 gremlin = [
     # 'amundsen-gremlin>=0.0.9',
-    'gremlinpython==3.5.1',
+    'gremlinpython==3.5.2',
     'tornado>=4.4.1,<6.0'
 ]
 all_deps = requirements + requirements_common + requirements_dev + oidc + atlas + rds + gremlin
