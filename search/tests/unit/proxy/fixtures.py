@@ -17,36 +17,24 @@ TERM_FILTERS_QUERY = {
                         "status",
                         "entity",
                         "tags",
-                        "badges"
+                        "badges",
                     ],
-                    "type": "cross_fields"
+                    "type": "cross_fields",
                 }
             }
         ],
         "filter": [
-            {
-                "wildcard": {
-                    "badges": "pii"
-                }
-            },
+            {"wildcard": {"badges": "pii"}},
             {
                 "bool": {
                     "should": [
-                        {
-                            "wildcard": {
-                                "feature_group.raw": "test_group"
-                            }
-                        },
-                        {
-                            "wildcard": {
-                                "feature_group.raw": "mock_group"
-                            }
-                        }
+                        {"wildcard": {"feature_group.raw": "test_group"}},
+                        {"wildcard": {"feature_group.raw": "mock_group"}},
                     ],
-                    "minimum_should_match": 1
+                    "minimum_should_match": 1,
                 }
-            }
-        ]
+            },
+        ],
     }
 }
 
@@ -62,9 +50,9 @@ TERM_QUERY = {
                         "schema^2",
                         "description",
                         "column_names",
-                        "badges"
+                        "badges",
                     ],
-                    "type": "cross_fields"
+                    "type": "cross_fields",
                 }
             }
         ]
@@ -76,43 +64,21 @@ FILTER_QUERY = {
         "filter": [
             {
                 "bool": {
-                    "should": [
-                        {
-                            "wildcard": {
-                                "name.raw": "mock_dashobard_*"
-                            }
-                        }
-                    ],
-                    "minimum_should_match": 1
+                    "should": [{"wildcard": {"name.raw": "mock_dashobard_*"}}],
+                    "minimum_should_match": 1,
                 }
             },
             {
                 "bool": {
                     "should": [
-                        {
-                            "wildcard": {
-                                "group_name.raw": "test_group"
-                            }
-                        },
-                        {
-                            "wildcard": {
-                                "group_name.raw": "mock_group"
-                            }
-                        }
+                        {"wildcard": {"group_name.raw": "test_group"}},
+                        {"wildcard": {"group_name.raw": "mock_group"}},
                     ],
-                    "minimum_should_match": 1
+                    "minimum_should_match": 1,
                 }
             },
-            {
-                "wildcard": {
-                    "tags": "tag_*"
-                }
-            },
-            {
-                "wildcard": {
-                    "tags": "tag_2"
-                }
-            }
+            {"wildcard": {"tags": "tag_*"}},
+            {"wildcard": {"tags": "tag_2"}},
         ]
     }
 }
@@ -121,17 +87,9 @@ RESPONSE_1 = [
     {
         "took": 10,
         "timed_out": False,
-        "_shards": {
-            "total": 5,
-            "successful": 5,
-            "skipped": 0,
-            "failed": 0
-        },
+        "_shards": {"total": 5, "successful": 5, "skipped": 0, "failed": 0},
         "hits": {
-            "total": {
-                "value": 2,
-                "relation": "eq"
-            },
+            "total": {"value": 2, "relation": "eq"},
             "max_score": 804.52716,
             "hits": [
                 {
@@ -140,21 +98,14 @@ RESPONSE_1 = [
                     "_id": "mock_id_1",
                     "_score": 804.52716,
                     "_source": {
-                        "badges": [
-                            "pii",
-                            "beta"
-                        ],
+                        "badges": ["pii", "beta"],
                         "cluster": "mock_cluster",
                         "column_descriptions": [
                             "mock_col_desc_1",
                             "mock_col_desc_2",
-                            "mock_col_desc_3"
+                            "mock_col_desc_3",
                         ],
-                        "column_names": [
-                            "mock_col_1",
-                            "mock_col_2",
-                            "mock_col_3"
-                        ],
+                        "column_names": ["mock_col_1", "mock_col_2", "mock_col_3"],
                         "database": "mock_db",
                         "description": "mock table description",
                         "display_name": "mock_schema.mock_table_1",
@@ -164,14 +115,16 @@ RESPONSE_1 = [
                         "programmatic_descriptions": [],
                         "schema": "mock_schema",
                         "schema_description": None,
-                        "tags": [
-                            "mock_tag_1",
-                            "mock_tag_2",
-                            "mock_tag_3"
-                        ],
+                        "tags": ["mock_tag_1", "mock_tag_2", "mock_tag_3"],
                         "total_usage": 74841,
+<<<<<<< HEAD:search/tests/unit/proxy/fixtures.py
                         "unique_usage": 457
                     }
+=======
+                        "unique_usage": 457,
+                        "resource_type": "table",
+                    },
+>>>>>>> upstream/main:search/tests/unit/proxy/v2/fixtures_v2.py
                 },
                 {
                     "_index": "table_search_index",
@@ -184,13 +137,9 @@ RESPONSE_1 = [
                         "column_descriptions": [
                             "mock_col_desc_1",
                             "mock_col_desc_2",
-                            "mock_col_desc_3"
+                            "mock_col_desc_3",
                         ],
-                        "column_names": [
-                            "mock_col_1",
-                            "mock_col_2",
-                            "mock_col_3"
-                        ],
+                        "column_names": ["mock_col_1", "mock_col_2", "mock_col_3"],
                         "database": "mock_db",
                         "description": "mock table description",
                         "display_name": "mock_schema.mock_table_2",
@@ -200,38 +149,34 @@ RESPONSE_1 = [
                         "programmatic_descriptions": [],
                         "schema": "mock_schema",
                         "schema_description": None,
-                        "tags": [
-                            "mock_tag_4",
-                            "mock_tag_5",
-                            "mock_tag_6"
-                        ],
+                        "tags": ["mock_tag_4", "mock_tag_5", "mock_tag_6"],
                         "total_usage": 4715,
+<<<<<<< HEAD:search/tests/unit/proxy/fixtures.py
                         "unique_usage": 254
                     }
                 }
             ]
+=======
+                        "unique_usage": 254,
+                        "resource_type": "table",
+                    },
+                },
+            ],
+>>>>>>> upstream/main:search/tests/unit/proxy/v2/fixtures_v2.py
         },
-        "status": 200
+        "status": 200,
     },
     {
         "took": 1,
         "timed_out": False,
-        "_shards": {
-            "total": 5,
-            "successful": 5,
-            "skipped": 0,
-            "failed": 0
-        },
+        "_shards": {"total": 5, "successful": 5, "skipped": 0, "failed": 0},
         "hits": {
-            "total": {
-                "value": 0,
-                "relation": "eq"
-            },
+            "total": {"value": 0, "relation": "eq"},
             "max_score": None,
-            "hits": []
+            "hits": [],
         },
-        "status": 200
-    }
+        "status": 200,
+    },
 ]
 
 
@@ -239,17 +184,9 @@ RESPONSE_2 = [
     {
         "took": 12,
         "timed_out": False,
-        "_shards": {
-            "total": 5,
-            "successful": 5,
-            "skipped": 0,
-            "failed": 0
-        },
+        "_shards": {"total": 5, "successful": 5, "skipped": 0, "failed": 0},
         "hits": {
-            "total": {
-                "value": 2,
-                "relation": "eq"
-            },
+            "total": {"value": 2, "relation": "eq"},
             "max_score": 771.9865,
             "hits": [
                 {
@@ -258,21 +195,14 @@ RESPONSE_2 = [
                     "_id": "mock_id_1",
                     "_score": 804.52716,
                     "_source": {
-                        "badges": [
-                            "pii",
-                            "beta"
-                        ],
+                        "badges": ["pii", "beta"],
                         "cluster": "mock_cluster",
                         "column_descriptions": [
                             "mock_col_desc_1",
                             "mock_col_desc_2",
-                            "mock_col_desc_3"
+                            "mock_col_desc_3",
                         ],
-                        "column_names": [
-                            "mock_col_1",
-                            "mock_col_2",
-                            "mock_col_3"
-                        ],
+                        "column_names": ["mock_col_1", "mock_col_2", "mock_col_3"],
                         "database": "mock_db",
                         "description": "mock table description",
                         "display_name": "mock_schema.mock_table_1",
@@ -282,14 +212,16 @@ RESPONSE_2 = [
                         "programmatic_descriptions": [],
                         "schema": "mock_schema",
                         "schema_description": None,
-                        "tags": [
-                            "mock_tag_1",
-                            "mock_tag_2",
-                            "mock_tag_3"
-                        ],
+                        "tags": ["mock_tag_1", "mock_tag_2", "mock_tag_3"],
                         "total_usage": 74841,
+<<<<<<< HEAD:search/tests/unit/proxy/fixtures.py
                         "unique_usage": 457
                     }
+=======
+                        "unique_usage": 457,
+                        "resource_type": "table",
+                    },
+>>>>>>> upstream/main:search/tests/unit/proxy/v2/fixtures_v2.py
                 },
                 {
                     "_index": "table_search_index",
@@ -302,13 +234,9 @@ RESPONSE_2 = [
                         "column_descriptions": [
                             "mock_col_desc_1",
                             "mock_col_desc_2",
-                            "mock_col_desc_3"
+                            "mock_col_desc_3",
                         ],
-                        "column_names": [
-                            "mock_col_1",
-                            "mock_col_2",
-                            "mock_col_3"
-                        ],
+                        "column_names": ["mock_col_1", "mock_col_2", "mock_col_3"],
                         "database": "mock_db",
                         "description": "mock table description",
                         "display_name": "mock_schema.mock_table_2",
@@ -318,33 +246,29 @@ RESPONSE_2 = [
                         "programmatic_descriptions": [],
                         "schema": "mock_schema",
                         "schema_description": None,
-                        "tags": [
-                            "mock_tag_4",
-                            "mock_tag_5",
-                            "mock_tag_6"
-                        ],
+                        "tags": ["mock_tag_4", "mock_tag_5", "mock_tag_6"],
                         "total_usage": 4715,
+<<<<<<< HEAD:search/tests/unit/proxy/fixtures.py
                         "unique_usage": 254
                     }
                 }
             ]
+=======
+                        "unique_usage": 254,
+                        "resource_type": "table",
+                    },
+                },
+            ],
+>>>>>>> upstream/main:search/tests/unit/proxy/v2/fixtures_v2.py
         },
-        "status": 200
+        "status": 200,
     },
     {
         "took": 6,
         "timed_out": False,
-        "_shards": {
-            "total": 5,
-            "successful": 5,
-            "skipped": 0,
-            "failed": 0
-        },
+        "_shards": {"total": 5, "successful": 5, "skipped": 0, "failed": 0},
         "hits": {
-            "total": {
-                "value": 1,
-                "relation": "eq"
-            },
+            "total": {"value": 1, "relation": "eq"},
             "max_score": 61.40606,
             "hits": [
                 {
@@ -366,27 +290,25 @@ RESPONSE_2 = [
                         "team_name": "Amundsen",
                         "total_follow": 0,
                         "total_own": 1,
+<<<<<<< HEAD:search/tests/unit/proxy/fixtures.py
                         "total_read": 0
                     }
+=======
+                        "total_read": 0,
+                        "resource_type": "user",
+                    },
+>>>>>>> upstream/main:search/tests/unit/proxy/v2/fixtures_v2.py
                 }
-            ]
+            ],
         },
-        "status": 200
+        "status": 200,
     },
     {
         "took": 8,
         "timed_out": False,
-        "_shards": {
-            "total": 5,
-            "successful": 5,
-            "skipped": 0,
-            "failed": 0
-        },
+        "_shards": {"total": 5, "successful": 5, "skipped": 0, "failed": 0},
         "hits": {
-            "total": {
-                "value": 3,
-                "relation": "eq"
-            },
+            "total": {"value": 3, "relation": "eq"},
             "max_score": 62.66787,
             "hits": [
                 {
@@ -406,8 +328,14 @@ RESPONSE_2 = [
                         "status": "active",
                         "tags": [],
                         "total_usage": 0,
+<<<<<<< HEAD:search/tests/unit/proxy/fixtures.py
                         "version": 1
                     }
+=======
+                        "version": 1,
+                        "resource_type": "feature",
+                    },
+>>>>>>> upstream/main:search/tests/unit/proxy/v2/fixtures_v2.py
                 },
                 {
                     "_index": "feature_search_index",
@@ -426,8 +354,14 @@ RESPONSE_2 = [
                         "status": "active",
                         "tags": [],
                         "total_usage": 10,
+<<<<<<< HEAD:search/tests/unit/proxy/fixtures.py
                         "version": 1
                     }
+=======
+                        "version": 1,
+                        "resource_type": "feature",
+                    },
+>>>>>>> upstream/main:search/tests/unit/proxy/v2/fixtures_v2.py
                 },
                 {
                     "_index": "feature_search_index",
@@ -436,9 +370,7 @@ RESPONSE_2 = [
                     "_score": 62.66787,
                     "_source": {
                         "availability": None,
-                        "badges": [
-                            "pii"
-                        ],
+                        "badges": ["pii"],
                         "description": "mock feature description",
                         "entity": None,
                         "feature_group": "fg_3",
@@ -448,11 +380,19 @@ RESPONSE_2 = [
                         "status": "active",
                         "tags": [],
                         "total_usage": 3,
+<<<<<<< HEAD:search/tests/unit/proxy/fixtures.py
                         "version": 2
                     }
                 }
             ]
+=======
+                        "version": 2,
+                        "resource_type": "feature",
+                    },
+                },
+            ],
+>>>>>>> upstream/main:search/tests/unit/proxy/v2/fixtures_v2.py
         },
-        "status": 200
-    }
+        "status": 200,
+    },
 ]

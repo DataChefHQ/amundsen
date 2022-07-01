@@ -66,6 +66,7 @@ export class NavBar extends React.Component<NavBarProps> {
     });
   }
 
+<<<<<<< HEAD
   renderSearchBar = () => {
     if (this.props.location.pathname !== '/') {
       return (
@@ -75,6 +76,71 @@ export class NavBar extends React.Component<NavBarProps> {
       );
     }
     return null;
+=======
+const getPageTourInfo = (pathname) => {
+  const { result: productToursForThisPage, tourPath } = getProductToursFor(
+    pathname
+  );
+  const pageTours = productToursForThisPage
+    ? productToursForThisPage.reduce(reduceToPageTours, [])
+    : [];
+  const pageTourSteps = pageTours.length ? pageTours[0].steps : [];
+  const pageTourKey =
+    generateKeyFromSteps(pageTours, tourPath) || DEFAULT_PAGE_TOUR_KEY;
+  const hasPageTour = productToursForThisPage ? !!pageTours.length : false;
+
+  return { hasPageTour, pageTourKey, pageTourSteps };
+};
+
+const getFeatureTourInfo = (pathname) => {
+  const { result: productToursForThisPage, tourPath } = getProductToursFor(
+    pathname
+  );
+  const featureTours = productToursForThisPage
+    ? productToursForThisPage.reduce(reduceToFeatureTours, [])
+    : [];
+  const featureTourSteps = featureTours.length ? featureTours[0].steps : [];
+  const featureTourKey =
+    generateKeyFromSteps(featureTours, tourPath) || DEFAULT_FEATURE_TOUR_KEY;
+  const hasFeatureTour = productToursForThisPage
+    ? !!featureTourSteps.length
+    : false;
+
+  return { hasFeatureTour, featureTourKey, featureTourSteps };
+};
+
+// Props
+interface StateFromProps {
+  loggedInUser: LoggedInUser;
+}
+
+export type NavBarProps = StateFromProps & RouteComponentProps<{}>;
+
+export const NavBar: React.FC<NavBarProps> = ({ loggedInUser, location }) => {
+  const [runTour, setRunTour] = React.useState(false);
+  const { hasPageTour, pageTourKey, pageTourSteps } = getPageTourInfo(
+    location.pathname
+  );
+  const {
+    hasFeatureTour,
+    featureTourKey,
+    featureTourSteps,
+  } = getFeatureTourInfo(location.pathname);
+
+  React.useEffect(() => {
+    setRunTour(false);
+  }, [location.pathname]);
+
+  const userLink = `/user/${loggedInUser.user_id}?source=navbar`;
+  let avatar = <div className="shimmering-circle is-shimmer-animated" />;
+
+  if (loggedInUser.display_name) {
+    avatar = <Avatar name={loggedInUser.display_name} size={32} round />;
+  }
+
+  const handleTourClick = () => {
+    setRunTour(true);
+>>>>>>> upstream/main
   };
 
   render() {

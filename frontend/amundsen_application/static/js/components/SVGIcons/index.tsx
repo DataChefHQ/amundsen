@@ -10,3 +10,13 @@ export * from './LeftIcon';
 export * from './RightArrowIcon';
 export * from './LeftArrowIcon';
 export * from './InformationIcon';
+<<<<<<< HEAD
+=======
+export * from './Binoculars';
+export * from './Chat';
+export * from './TableIcon';
+export * from './DoubleChevronUp';
+export * from './DoubleChevronDown';
+export * from './RightTriangleIcon';
+export * from './DownTriangleIcon';
+>>>>>>> upstream/main

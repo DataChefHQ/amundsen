@@ -63,6 +63,21 @@ export interface TableColumn {
   nested_level?: number;
 }
 
+<<<<<<< HEAD
+=======
+export interface TypeMetadata {
+  kind: string;
+  name: string;
+  key: string;
+  description: string;
+  data_type: string;
+  sort_order: number;
+  badges?: Badge[];
+  children?: TypeMetadata[];
+  is_editable: boolean;
+}
+
+>>>>>>> upstream/main
 export interface NestedTableColumn {
   col_type: string;
   description: string;

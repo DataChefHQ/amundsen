@@ -492,3 +492,41 @@ export function isNestedColumnsEnabled() {
 export function getMaxNestedColumns() {
   return AppConfig.nestedColumns.maxNestedColumns;
 }
+<<<<<<< HEAD
+=======
+
+/**
+ * Returns the configuration for the Product Tour
+ */
+export function getProductToursFor(
+  path: string
+): { result: TourConfig[] | null; tourPath: string } {
+  let result: TourConfig[] | null = null;
+  let tourPath: string = '';
+
+  if (AppConfig.productTour[path] && AppConfig.productTour[path].length) {
+    result = AppConfig.productTour[path];
+    tourPath = path;
+  }
+
+  const wildcardPathKeys = Object.keys(AppConfig.productTour).filter(
+    hasWildcard
+  );
+  if (wildcardPathKeys.length) {
+    wildcardPathKeys.forEach((key) => {
+      const decomposedKey = key.substring(0, key.length - 1);
+
+      if (path.startsWith(decomposedKey)) {
+        result = AppConfig.productTour[key];
+        tourPath = key;
+      }
+    });
+  }
+
+  return { result, tourPath };
+}
+
+export function searchHighlightingEnabled(resource: ResourceType): boolean {
+  return AppConfig.resourceConfig[resource].searchHighlight.enableHighlight;
+}
+>>>>>>> upstream/main

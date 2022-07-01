@@ -27,6 +27,10 @@ import reducer, {
   getColumnDescriptionFailure,
   getColumnDescriptionSuccess,
   updateColumnDescription,
+  getTypeMetadataDescription,
+  getTypeMetadataDescriptionFailure,
+  getTypeMetadataDescriptionSuccess,
+  updateTypeMetadataDescription,
   getPreviewData,
   getPreviewDataFailure,
   getPreviewDataSuccess,
@@ -50,6 +54,10 @@ import {
   getColumnDescriptionWorker,
   updateColumnDescriptionWatcher,
   updateColumnDescriptionWorker,
+  getTypeMetadataDescriptionWatcher,
+  getTypeMetadataDescriptionWorker,
+  updateTypeMetadataDescriptionWatcher,
+  updateTypeMetadataDescriptionWorker,
   getPreviewDataWatcher,
   getPreviewDataWorker,
   getTableQualityChecksWatcher,
@@ -62,6 +70,8 @@ import {
   UpdateTableDescription,
   GetColumnDescription,
   UpdateColumnDescription,
+  GetTypeMetadataDescription,
+  UpdateTypeMetadataDescription,
   GetPreviewData,
   GetTableQualityChecks,
 } from './types';
@@ -77,8 +87,13 @@ describe('tableMetadata ducks', () => {
   let testIndex: string;
   let testSource: string;
   let testTableQualityChecks: TableQualityChecks;
+<<<<<<< HEAD
 
   let columnIndex: number;
+=======
+  let columnKey: string;
+  let typeMetadataKey: string;
+>>>>>>> upstream/main
   let emptyPreviewData: PreviewData;
   let newDescription: string;
   let previewData: PreviewData;
@@ -114,7 +129,12 @@ describe('tableMetadata ducks', () => {
       last_run_timestamp: null,
     };
 
+<<<<<<< HEAD
     columnIndex = 2;
+=======
+    columnKey = 'database://cluster.schema/table/column';
+    typeMetadataKey = 'database://cluster.schema/table/column/type/column';
+>>>>>>> upstream/main
     emptyPreviewData = {
       columns: [],
       data: [],
@@ -207,6 +227,7 @@ describe('tableMetadata ducks', () => {
       expect(payload.onFailure).toBe(mockFailure);
     });
 
+<<<<<<< HEAD
     it('getColumnDescription - returns the action to get a column description given the index', () => {
       const action = getColumnDescription(
         columnIndex,
@@ -216,6 +237,13 @@ describe('tableMetadata ducks', () => {
       const { payload } = action;
       expect(action.type).toBe(GetColumnDescription.REQUEST);
       expect(payload.columnIndex).toBe(columnIndex);
+=======
+    it('getColumnDescription - returns the action to get a column description given the key', () => {
+      const action = getColumnDescription(columnKey, mockSuccess, mockFailure);
+      const { payload } = action;
+      expect(action.type).toBe(GetColumnDescription.REQUEST);
+      expect(payload.columnKey).toBe(columnKey);
+>>>>>>> upstream/main
       expect(payload.onSuccess).toBe(mockSuccess);
       expect(payload.onFailure).toBe(mockFailure);
     });
@@ -234,17 +262,67 @@ describe('tableMetadata ducks', () => {
       expect(payload.tableMetadata).toBe(expectedData);
     });
 
-    it('updateColumnDescription - returns the action to update the table description', () => {
+    it('updateColumnDescription - returns the action to update the column description', () => {
       const action = updateColumnDescription(
         newDescription,
+<<<<<<< HEAD
         columnIndex,
+=======
+        columnKey,
+>>>>>>> upstream/main
         mockSuccess,
         mockFailure
       );
       const { payload } = action;
       expect(action.type).toBe(UpdateColumnDescription.REQUEST);
       expect(payload.newValue).toBe(newDescription);
+<<<<<<< HEAD
       expect(payload.columnIndex).toBe(columnIndex);
+=======
+      expect(payload.columnKey).toBe(columnKey);
+      expect(payload.onSuccess).toBe(mockSuccess);
+      expect(payload.onFailure).toBe(mockFailure);
+    });
+
+    it('getTypeMetadataDescription - returns the action to get a type metadata description given the key', () => {
+      const action = getTypeMetadataDescription(
+        typeMetadataKey,
+        mockSuccess,
+        mockFailure
+      );
+      const { payload } = action;
+      expect(action.type).toBe(GetTypeMetadataDescription.REQUEST);
+      expect(payload.typeMetadataKey).toBe(typeMetadataKey);
+      expect(payload.onSuccess).toBe(mockSuccess);
+      expect(payload.onFailure).toBe(mockFailure);
+    });
+
+    it('getTypeMetadataDescriptionFailure - returns the action to process failure', () => {
+      const action = getTypeMetadataDescriptionFailure(expectedData);
+      const { payload } = action;
+      expect(action.type).toBe(GetTypeMetadataDescription.FAILURE);
+      expect(payload.tableMetadata).toBe(expectedData);
+    });
+
+    it('getTypeMetadataDescriptionSuccess - returns the action to process success', () => {
+      const action = getTypeMetadataDescriptionSuccess(expectedData);
+      const { payload } = action;
+      expect(action.type).toBe(GetTypeMetadataDescription.SUCCESS);
+      expect(payload.tableMetadata).toBe(expectedData);
+    });
+
+    it('updateTypeMetadataDescription - returns the action to update the type metadata description', () => {
+      const action = updateTypeMetadataDescription(
+        newDescription,
+        typeMetadataKey,
+        mockSuccess,
+        mockFailure
+      );
+      const { payload } = action;
+      expect(action.type).toBe(UpdateTypeMetadataDescription.REQUEST);
+      expect(payload.newValue).toBe(newDescription);
+      expect(payload.typeMetadataKey).toBe(typeMetadataKey);
+>>>>>>> upstream/main
       expect(payload.onSuccess).toBe(mockSuccess);
       expect(payload.onFailure).toBe(mockFailure);
     });
@@ -354,6 +432,24 @@ describe('tableMetadata ducks', () => {
     it('should handle GetColumnDescription.SUCCESS', () => {
       expect(
         reducer(testState, getColumnDescriptionSuccess(expectedData))
+      ).toEqual({
+        ...testState,
+        tableData: expectedData,
+      });
+    });
+
+    it('should handle GetTypeMetadataDescription.FAILURE', () => {
+      expect(
+        reducer(testState, getTypeMetadataDescriptionFailure(expectedData))
+      ).toEqual({
+        ...testState,
+        tableData: expectedData,
+      });
+    });
+
+    it('should handle GetTypeMetadataDescription.SUCCESS', () => {
+      expect(
+        reducer(testState, getTypeMetadataDescriptionSuccess(expectedData))
       ).toEqual({
         ...testState,
         tableData: expectedData,
@@ -585,18 +681,30 @@ describe('tableMetadata ducks', () => {
               .next(globalState)
               .call(
                 API.getColumnDescription,
+<<<<<<< HEAD
                 action.payload.columnIndex,
+=======
+                action.payload.columnKey,
+>>>>>>> upstream/main
                 globalState.tableMetadata.tableData
               )
               .next(mockNewTableData)
               .put(getColumnDescriptionSuccess(mockNewTableData));
         });
         it('without success callback', () => {
+<<<<<<< HEAD
           sagaTest(getColumnDescription(columnIndex)).next().isDone();
         });
 
         it('with success callback', () => {
           sagaTest(getColumnDescription(columnIndex, mockSuccess, mockFailure))
+=======
+          sagaTest(getColumnDescription(columnKey)).next().isDone();
+        });
+
+        it('with success callback', () => {
+          sagaTest(getColumnDescription(columnKey, mockSuccess, mockFailure))
+>>>>>>> upstream/main
             .next()
             .call(mockSuccess)
             .next()
@@ -618,11 +726,19 @@ describe('tableMetadata ducks', () => {
               );
         });
         it('without failure callback', () => {
+<<<<<<< HEAD
           sagaTest(getColumnDescription(columnIndex)).next().isDone();
         });
 
         it('with failure callback', () => {
           sagaTest(getColumnDescription(columnIndex, mockSuccess, mockFailure))
+=======
+          sagaTest(getColumnDescription(columnKey)).next().isDone();
+        });
+
+        it('with failure callback', () => {
+          sagaTest(getColumnDescription(columnKey, mockSuccess, mockFailure))
+>>>>>>> upstream/main
             .next()
             .call(mockFailure)
             .next()
@@ -653,7 +769,11 @@ describe('tableMetadata ducks', () => {
               updateColumnDescriptionWorker,
               updateColumnDescription(
                 newDescription,
+<<<<<<< HEAD
                 columnIndex,
+=======
+                columnKey,
+>>>>>>> upstream/main
                 mockSuccess,
                 undefined
               )
@@ -664,7 +784,11 @@ describe('tableMetadata ducks', () => {
               .call(
                 API.updateColumnDescription,
                 newDescription,
+<<<<<<< HEAD
                 columnIndex,
+=======
+                columnKey,
+>>>>>>> upstream/main
                 globalState.tableMetadata.tableData
               );
         });
@@ -685,7 +809,171 @@ describe('tableMetadata ducks', () => {
               updateColumnDescriptionWorker,
               updateColumnDescription(
                 newDescription,
+<<<<<<< HEAD
                 columnIndex,
+=======
+                columnKey,
+                undefined,
+                mockFailure
+              )
+            )
+              .next()
+              .select()
+              .next(globalState)
+              .throw(new Error());
+        });
+        it('without failure callback', () => {
+          sagaTest().next().isDone();
+        });
+
+        it('with failure callback', () => {
+          sagaTest(mockFailure).call(mockFailure).next().isDone();
+        });
+      });
+    });
+
+    describe('getTypeMetadataDescriptionWatcher', () => {
+      it('takes every GetTypeMetadataDescription.REQUEST with getTypeMetadataDescriptionWorker', () => {
+        testSaga(getTypeMetadataDescriptionWatcher)
+          .next()
+          .takeEvery(
+            GetTypeMetadataDescription.REQUEST,
+            getTypeMetadataDescriptionWorker
+          )
+          .next()
+          .isDone();
+      });
+    });
+
+    describe('getTypeMetadataDescriptionWorker', () => {
+      describe('executes flow for getting a type metadata description', () => {
+        let sagaTest;
+        beforeAll(() => {
+          const mockNewTableData: TableMetadata = initialTableDataState;
+
+          sagaTest = (action) =>
+            testSaga(getTypeMetadataDescriptionWorker, action)
+              .next()
+              .select()
+              .next(globalState)
+              .call(
+                API.getTypeMetadataDescription,
+                action.payload.typeMetadataKey,
+                globalState.tableMetadata.tableData
+              )
+              .next(mockNewTableData)
+              .put(getTypeMetadataDescriptionSuccess(mockNewTableData));
+        });
+        it('without success callback', () => {
+          sagaTest(getTypeMetadataDescription(typeMetadataKey)).next().isDone();
+        });
+
+        it('with success callback', () => {
+          sagaTest(
+            getTypeMetadataDescription(
+              typeMetadataKey,
+              mockSuccess,
+              mockFailure
+            )
+          )
+            .next()
+            .call(mockSuccess)
+            .next()
+            .isDone();
+        });
+      });
+
+      describe('handles request error', () => {
+        let sagaTest;
+        beforeAll(() => {
+          sagaTest = (action) =>
+            testSaga(getTypeMetadataDescriptionWorker, action)
+              .next()
+              .select()
+              .next(globalState)
+              .throw(new Error())
+              .put(
+                getTypeMetadataDescriptionFailure(
+                  globalState.tableMetadata.tableData
+                )
+              );
+        });
+        it('without failure callback', () => {
+          sagaTest(getTypeMetadataDescription(typeMetadataKey)).next().isDone();
+        });
+
+        it('with failure callback', () => {
+          sagaTest(
+            getTypeMetadataDescription(
+              typeMetadataKey,
+              mockSuccess,
+              mockFailure
+            )
+          )
+            .next()
+            .call(mockFailure)
+            .next()
+            .isDone();
+        });
+      });
+    });
+
+    describe('updateTypeMetadataDescriptionWatcher', () => {
+      it('takes every UpdateTypeMetadataDescription.REQUEST with updateTypeMetadataDescriptionWorker', () => {
+        testSaga(updateTypeMetadataDescriptionWatcher)
+          .next()
+          .takeEvery(
+            UpdateTypeMetadataDescription.REQUEST,
+            updateTypeMetadataDescriptionWorker
+          )
+          .next()
+          .isDone();
+      });
+    });
+
+    describe('updateTypeMetadataDescriptionWorker', () => {
+      describe('executes flow for updating a type metadata description', () => {
+        let sagaTest;
+        beforeAll(() => {
+          sagaTest = (mockSuccess) =>
+            testSaga(
+              updateTypeMetadataDescriptionWorker,
+              updateTypeMetadataDescription(
+                newDescription,
+                typeMetadataKey,
+                mockSuccess,
+                undefined
+              )
+            )
+              .next()
+              .select()
+              .next(globalState)
+              .call(
+                API.updateTypeMetadataDescription,
+                newDescription,
+                typeMetadataKey,
+                globalState.tableMetadata.tableData
+              );
+        });
+        it('without success callback', () => {
+          sagaTest().next().isDone();
+        });
+
+        it('with success callback', () => {
+          sagaTest(mockSuccess).next().call(mockSuccess).next().isDone();
+        });
+      });
+
+      describe('handles request error', () => {
+        let sagaTest;
+        beforeAll(() => {
+          sagaTest = (mockFailure) =>
+            testSaga(
+              updateTypeMetadataDescriptionWorker,
+              updateTypeMetadataDescription(
+                newDescription,
+                typeMetadataKey,
+>>>>>>> upstream/main
                 undefined,
                 mockFailure
               )

@@ -20,10 +20,6 @@ import TestDataBuilder from './testDataBuilder';
 
 jest.mock('config/config-utils');
 
-const mockedNotificationsEnabled = mocked(
-  ConfigUtils.notificationsEnabled,
-  true
-);
 const mockedGetTableSortCriterias = mocked(
   ConfigUtils.getTableSortCriterias,
   true
@@ -45,6 +41,16 @@ const setup = (propOverrides?: Partial<ColumnListProps>) => {
       schema: 'schema',
     },
     openRequestDescriptionDialog: jest.fn(),
+<<<<<<< HEAD
+=======
+    toggleRightPanel: jest.fn(),
+    preExpandRightPanel: jest.fn(),
+    hideSomeColumnMetadata: false,
+    currentSelectedKey: '',
+    areNestedColumnsExpanded: true,
+    toggleExpandingColumns: jest.fn(),
+    hasColumnsToExpand: jest.fn(),
+>>>>>>> upstream/main
     ...propOverrides,
   };
   // Update state
@@ -73,7 +79,6 @@ describe('ColumnList', () => {
       direction: SortDirection.descending,
     },
   });
-  mockedNotificationsEnabled.mockReturnValue(true);
 
   describe('render', () => {
     it('renders without issues', () => {
@@ -116,10 +121,17 @@ describe('ColumnList', () => {
         expect(actual).toEqual(expected);
       });
 
+<<<<<<< HEAD
       it('should render the actions column', () => {
         const { wrapper } = setup({ columns });
         const expected = columns.length;
         const actual = wrapper.find('.table-detail-table .actions').length;
+=======
+      it('should not render the usage column when the side panel is open', () => {
+        const { wrapper } = setup({ columns, hideSomeColumnMetadata: true });
+        const expected = 0;
+        const actual = wrapper.find('.table-detail-table .usage-value').length;
+>>>>>>> upstream/main
 
         expect(actual).toEqual(expected);
       });
@@ -299,19 +311,6 @@ describe('ColumnList', () => {
 
           expect(actual).toEqual(expected);
         });
-      });
-    });
-
-    describe('when notifications are not enabled', () => {
-      const { columns } = dataBuilder.build();
-
-      it('should not render the actions column', () => {
-        mockedNotificationsEnabled.mockReturnValue(false);
-        const { wrapper } = setup({ columns });
-        const expected = 0;
-        const actual = wrapper.find('.table-detail-table .actions').length;
-
-        expect(actual).toEqual(expected);
       });
     });
 

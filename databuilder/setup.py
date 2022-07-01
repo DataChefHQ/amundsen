@@ -1,17 +1,24 @@
 # Copyright Contributors to the Amundsen project.
 # SPDX-License-Identifier: Apache-2.0
+
 import os
 
 from setuptools import find_packages, setup
 
+<<<<<<< HEAD
 __version__ = '6.5.0'
+=======
+__version__ = '6.10.0'
+>>>>>>> upstream/main
 
-requirements_path = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'requirements.txt')
-with open(requirements_path) as requirements_file:
+requirements_path = os.path.join(os.path.dirname(os.path.realpath(__file__)),
+                                 'requirements.txt')
+with open(requirements_path, 'r') as requirements_file:
     requirements = requirements_file.readlines()
 
-requirements_path = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'requirements-dev.txt')
-with open(requirements_path) as requirements_file:
+requirements_path = os.path.join(os.path.dirname(os.path.realpath(__file__)),
+                                 'requirements-dev.txt')
+with open(requirements_path, 'r') as requirements_file:
     requirements_dev = requirements_file.readlines()
 
 kafka = ['confluent-kafka==1.0.0']
@@ -60,13 +67,14 @@ neptune = [
     'Flask==1.0.2',
     'gremlinpython==3.4.12',
     'requests-aws4auth==1.1.0',
-    'typing-extensions==3.7.4',
+    'typing-extensions==4.0.0',
     'overrides==2.5',
     'boto3==1.17.23'
 ]
 
 feast = [
-    'feast==0.17.0'
+    'feast==0.17.0',
+    'fastapi!=0.76.*'
 ]
 
 atlas = [
@@ -88,7 +96,12 @@ salesforce = [
 ]
 
 all_deps = requirements + requirements_dev + kafka + cassandra + glue + snowflake + athena + \
+<<<<<<< HEAD
     bigquery + jsonpath + db2 + dremio + druid + spark + feast + neptune + rds + atlas + salesforce + oracle
+=======
+    bigquery + jsonpath + db2 + dremio + druid + spark + feast + neptune + rds \
+    + atlas + salesforce + oracle + teradata
+>>>>>>> upstream/main
 
 setup(
     name='amundsen-databuilder',

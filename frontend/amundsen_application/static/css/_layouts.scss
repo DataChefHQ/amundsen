@@ -5,7 +5,11 @@
 @import 'typography';
 
 $resource-header-height: 84px;
+<<<<<<< HEAD
 $aside-separation-space: 40px;
+=======
+$aside-separation-space: $spacer-3;
+>>>>>>> upstream/main
 $screen-lg-container: 1440px;
 $header-link-height: 32px;
 $icon-header-size: 32px;
@@ -44,7 +48,7 @@ $icon-header-size: 32px;
 
       .header-bullets {
         display: inline;
-        margin: 0;
+        margin: 0 $spacer-1 0 0;
         padding: 0;
 
         li {
@@ -130,7 +134,7 @@ $icon-header-size: 32px;
       }
 
       .editable-text {
-        font-size: 16px;
+        font-size: $w2-font-size;
       }
 
       .avatar-label-component {
@@ -140,7 +144,7 @@ $icon-header-size: 32px;
       }
 
       .markdown-wrapper {
-        font-size: 16px;
+        font-size: $w2-font-size;
 
         // Restrict max size of header elements
         h1,
@@ -154,6 +158,65 @@ $icon-header-size: 32px;
     }
 
     > .right-panel {
+<<<<<<< HEAD
+=======
+      border-left: $spacer-half solid $divider;
+      flex-basis: $side-panel-size;
+      flex-shrink: 0;
+      min-height: min-content;
+      overflow-y: auto;
+      padding: 0 $spacer-3 $aside-separation-space;
+
+      .panel-header {
+        display: flex;
+        justify-content: space-between;
+      }
+
+      .panel-title {
+        @extend %text-title-w1;
+
+        margin-top: $aside-separation-space;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      .btn-close {
+        flex-basis: $close-btn-size;
+        flex-shrink: 0;
+        margin-top: $aside-separation-space;
+      }
+
+      .buttons-row {
+        display: flex;
+        gap: $spacer-2;
+        margin-top: $aside-separation-space;
+      }
+
+      .btn.btn-default {
+        line-height: $spacer-2;
+      }
+
+      .section-title {
+        @extend %text-title-w3;
+
+        color: $text-tertiary;
+        margin-bottom: $spacer-1;
+      }
+
+      .editable-section,
+      .metadata-section {
+        margin-top: $aside-separation-space;
+        position: relative;
+      }
+
+      .editable-text {
+        font-size: $w2-font-size;
+      }
+    }
+
+    > .main-content-panel {
+>>>>>>> upstream/main
       flex-basis: 500px;
       flex-grow: 1;
       flex-shrink: 0;

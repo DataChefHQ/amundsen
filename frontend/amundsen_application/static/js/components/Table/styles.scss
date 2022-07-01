@@ -14,6 +14,12 @@ $shimmer-block-width: 40%;
 $table-header-bottom-border-color: $gray15;
 $table-header-background-color: $gray5;
 $row-bottom-border-color: $gray10;
+<<<<<<< HEAD
+=======
+$nested-column-row-color: $gray5;
+$nested-column-bottom-border-color: $gray15;
+$selected-row-color: $indigo10;
+>>>>>>> upstream/main
 
 .ams-table {
   width: 100%;
@@ -54,7 +60,7 @@ $row-bottom-border-color: $gray10;
   }
 
   &:first-child {
-    padding-left: $spacer-3;
+    padding-left: 0;
   }
 
   &:last-child {
@@ -68,6 +74,19 @@ $row-bottom-border-color: $gray10;
   &.is-empty,
   &.has-child-expanded {
     border-bottom: 0;
+  }
+
+  &.is-interactive-row {
+    position: relative;
+    cursor: pointer;
+
+    &:hover {
+      box-shadow: $hover-box-shadow;
+      z-index: 1;
+    }
+    &:active {
+      background-color: $selected-row-color;
+    }
   }
 }
 
@@ -112,14 +131,27 @@ $row-bottom-border-color: $gray10;
 
 .ams-table-expanding-button {
   border: 0;
+<<<<<<< HEAD
   padding: 0;
   background-color: white;
   margin-right: $spacer-2;
+=======
+  padding: $spacer-1;
+  line-height: normal;
+  background-color: transparent;
+>>>>>>> upstream/main
 
   svg {
     vertical-align: bottom;
   }
 
+<<<<<<< HEAD
+=======
+  &.is-expand-collapse-all {
+    padding: 0;
+  }
+
+>>>>>>> upstream/main
   &:hover svg use {
     fill: $gray60;
   }

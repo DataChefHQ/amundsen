@@ -7,7 +7,9 @@ from typing import (
 )
 
 from amundsen_common.models.api import health_check
-from amundsen_common.models.search import Filter, SearchResponse
+from amundsen_common.models.search import (
+    Filter, HighlightOptions, SearchResponse,
+)
 from elasticsearch import Elasticsearch
 from elasticsearch.exceptions import ConnectionError as ElasticConnectionError, ElasticsearchException
 from elasticsearch_dsl import (
@@ -15,10 +17,14 @@ from elasticsearch_dsl import (
 )
 from elasticsearch_dsl.query import MultiMatch
 from elasticsearch_dsl.response import Response
-from elasticsearch_dsl.utils import AttrDict, AttrList
+from elasticsearch_dsl.utils import AttrList
 from werkzeug.exceptions import InternalServerError
 
+<<<<<<< HEAD:search/search_service/proxy/es_search_proxy.py
 from search_service.proxy.es_proxy_utils import Resource, get_index_for_resource
+=======
+from search_service.proxy.es_proxy_utils import Resource, create_search_response
+>>>>>>> upstream/main:search/search_service/proxy/es_proxy_v2.py
 
 LOGGER = logging.getLogger(__name__)
 
@@ -78,7 +84,7 @@ class ElasticsearchProxy():
         'email': 'email'
     }
 
-    RESOUCE_TO_MAPPING = {
+    RESOURCE_TO_MAPPING = {
         Resource.TABLE: TABLE_MAPPING,
         Resource.DASHBOARD: DASHBOARD_MAPPING,
         Resource.FEATURE: FEATURE_MAPPING,
@@ -185,7 +191,7 @@ class ElasticsearchProxy():
         """
         Builds the query object for all of the filters given in the search request
         """
-        mapping = self.RESOUCE_TO_MAPPING.get(resource)
+        mapping = self.RESOURCE_TO_MAPPING.get(resource)
 
         filter_queries: List = []
 
@@ -225,6 +231,7 @@ class ElasticsearchProxy():
 
         return es_query
 
+<<<<<<< HEAD:search/search_service/proxy/es_search_proxy.py
     def _format_response(self, page_index: int,
                          results_per_page: int,
                          responses: List[Response],
@@ -277,6 +284,8 @@ class ElasticsearchProxy():
                               results=results_per_resource,
                               status_code=200)
 
+=======
+>>>>>>> upstream/main:search/search_service/proxy/es_proxy_v2.py
     def execute_queries(self, queries: Dict[Resource, Q],
                         page_index: int,
                         results_per_page: int) -> List[Response]:
@@ -305,8 +314,9 @@ class ElasticsearchProxy():
                page_index: int,
                results_per_page: int,
                resource_types: List[Resource],
-               filters: List[Filter]) -> SearchResponse:
-        if resource_types == []:
+               filters: List[Filter],
+               highlight_options: Dict[Resource, HighlightOptions]) -> SearchResponse:
+        if not resource_types:
             # if resource types are not defined then search all resources
             resource_types = self.PRIMARY_ENTITIES
 
@@ -321,10 +331,11 @@ class ElasticsearchProxy():
                                          page_index=page_index,
                                          results_per_page=results_per_page)
 
-        formatted_response = self._format_response(page_index=page_index,
-                                                   results_per_page=results_per_page,
-                                                   responses=responses,
-                                                   resource_types=resource_types)
+        formatted_response = create_search_response(page_index=page_index,
+                                                    results_per_page=results_per_page,
+                                                    responses=responses,
+                                                    resource_types=resource_types,
+                                                    resource_to_field_mapping=self.RESOURCE_TO_MAPPING)
 
         return formatted_response
 
@@ -391,7 +402,7 @@ class ElasticsearchProxy():
                                value: str = None,
                                operation: str = 'add') -> str:
 
-        mapped_field = self.RESOUCE_TO_MAPPING[resource_type].get(field)
+        mapped_field = self.RESOURCE_TO_MAPPING[resource_type].get(field)
         if not mapped_field:
             mapped_field = field
 
@@ -439,7 +450,7 @@ class ElasticsearchProxy():
                                resource_type: Resource,
                                field: str,
                                value: str = None) -> str:
-        mapped_field = self.RESOUCE_TO_MAPPING[resource_type].get(field)
+        mapped_field = self.RESOURCE_TO_MAPPING[resource_type].get(field)
         if not mapped_field:
             mapped_field = field
 

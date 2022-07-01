@@ -7,6 +7,7 @@
 $description-max-width: 650px;
 $description-max-width-med: 450px;
 $description-max-width-small: 300px;
+$description-max-height: 18px;
 $nested-arrow-spacer: 24px;
 $nested-arrow-spacer-max: $nested-arrow-spacer * 4;
 
@@ -23,6 +24,7 @@ $nested-arrow-spacer-max: $nested-arrow-spacer * 4;
 .table-detail-table {
   margin-bottom: 0;
 
+<<<<<<< HEAD
   .ams-table-body .actions .column-dropdown {
     &.open {
       background-color: $body-bg-tertiary;
@@ -59,6 +61,8 @@ $nested-arrow-spacer-max: $nested-arrow-spacer * 4;
     }
   }
 
+=======
+>>>>>>> upstream/main
   .nesting-arrow-spacer {
     height: $nested-arrow-spacer;
     width: $nested-arrow-spacer-max;
@@ -99,17 +103,25 @@ $nested-arrow-spacer-max: $nested-arrow-spacer * 4;
   }
 
   .column-desc {
-    @extend %text-body-w3;
+    max-height: $description-max-height;
+    overflow-y: hidden;
 
-    margin: 0;
-    max-width: $description-max-width-small;
+    p {
+      @extend %text-body-w3;
 
-    @media (min-width: $screen-md-max) {
-      max-width: $description-max-width-med;
-    }
+      margin: 0;
+      max-width: $description-max-width-small;
+      white-space: nowrap;
+      overflow-x: hidden;
+      text-overflow: ellipsis;
 
-    @media (min-width: $screen-lg-max) {
-      max-width: $description-max-width;
+      @media (min-width: $screen-md-max) {
+        max-width: $description-max-width-med;
+      }
+
+      @media (min-width: $screen-lg-max) {
+        max-width: $description-max-width;
+      }
     }
   }
 
