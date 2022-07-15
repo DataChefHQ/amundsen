@@ -11,7 +11,7 @@ from databuilder.models.table_metadata import TableMetadata
 from databuilder.models.type_metadata import ScalarTypeMetadata
 from databuilder.transformer.base_transformer import Transformer
 
-PARSING_FUNCTION = 'parsing_function'
+PARSING_FUNCTION = "parsing_function"
 
 LOGGER = logging.getLogger(__name__)
 
@@ -24,6 +24,7 @@ class ComplexTypeTransformer(Transformer):
     and the column itself, and sets the column's type_metadata
     field with the parsed results contained in a TypeMetadata object.
     """
+
     def init(self, conf: ConfigTree) -> None:
         self.success_count = 0
         self.failure_count = 0
@@ -35,21 +36,31 @@ class ComplexTypeTransformer(Transformer):
 
     def transform(self, record: Any) -> TableMetadata:
         if not isinstance(record, TableMetadata):
-            raise Exception(f"ComplexTypeTransformer expects record of type TableMetadata, received {type(record)}")
+            raise Exception(
+                f"ComplexTypeTransformer expects record of type TableMetadata, received {type(record)}"
+            )
 
         for column in record.columns:
             try:
                 column.set_column_key(record._get_col_key(column))
-                column.set_type_metadata(self._parsing_function(column.type, column.name, column))
+                column.set_type_metadata(
+                    self._parsing_function(column.type, column.name, column)
+                )
             except Exception as e:
                 # Default to scalar type if the type string cannot be parsed
-                column.set_type_metadata(ScalarTypeMetadata(name=column.name, parent=column, type_str=column.type))
+                column.set_type_metadata(
+                    ScalarTypeMetadata(
+                        name=column.name, parent=column, type_str=column.type
+                    )
+                )
                 self.failure_count += 1
-                LOGGER.warning(f"Could not parse type for column {column.name} in table {record.name}: {e}")
+                LOGGER.warning(
+                    f"Could not parse type for column {column.name} in table {record.name}: {e}"
+                )
             else:
                 self.success_count += 1
 
         return record
 
     def get_scope(self) -> str:
-        return 'transformer.complex_type'
+        return "transformer.complex_type"
