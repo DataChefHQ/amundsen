@@ -7,9 +7,7 @@ from pyparsing import ParseException
 
 from databuilder.models.table_metadata import ColumnMetadata
 from databuilder.models.type_metadata import (
-    ArrayTypeMetadata,
-    ScalarTypeMetadata,
-    StructTypeMetadata,
+    ArrayTypeMetadata, ScalarTypeMetadata, StructTypeMetadata,
 )
 from databuilder.utils.event_bridge_complex_type_parser import parse_event_bridge_type
 

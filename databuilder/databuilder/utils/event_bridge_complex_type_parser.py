@@ -4,24 +4,12 @@
 from typing import Union
 
 from pyparsing import (
-    Forward,
-    Group,
-    Keyword,
-    OneOrMore,
-    Optional,
-    Word,
-    alphanums,
-    delimitedList,
-    nestedExpr,
-    originalTextFor,
+    Forward, Group, Keyword, OneOrMore, Optional, Word, alphanums, delimitedList, nestedExpr, originalTextFor,
 )
 
 from databuilder.models.table_metadata import ColumnMetadata
 from databuilder.models.type_metadata import (
-    ArrayTypeMetadata,
-    ScalarTypeMetadata,
-    StructTypeMetadata,
-    TypeMetadata,
+    ArrayTypeMetadata, ScalarTypeMetadata, StructTypeMetadata, TypeMetadata,
 )
 
 array_keyword = Keyword("array")
