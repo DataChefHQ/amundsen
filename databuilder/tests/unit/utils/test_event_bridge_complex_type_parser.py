@@ -8,7 +8,6 @@ from pyparsing import ParseException
 from databuilder.models.table_metadata import ColumnMetadata
 from databuilder.models.type_metadata import (
     ArrayTypeMetadata,
-    MapTypeMetadata,
     ScalarTypeMetadata,
     StructTypeMetadata,
 )
