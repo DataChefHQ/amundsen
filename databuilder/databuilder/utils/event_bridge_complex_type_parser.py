@@ -13,14 +13,12 @@ from pyparsing import (
     alphanums,
     delimitedList,
     nestedExpr,
-    nums,
     originalTextFor,
 )
 
 from databuilder.models.table_metadata import ColumnMetadata
 from databuilder.models.type_metadata import (
     ArrayTypeMetadata,
-    MapTypeMetadata,
     ScalarTypeMetadata,
     StructTypeMetadata,
     TypeMetadata,
@@ -35,9 +33,9 @@ field_type = Forward()
 # Scalar types: string or string[datetime]
 
 scalar_quantifier = (
-    "["
-    + Word(alphanums + "_" + "-")
-    + Optional("]" | "," + Word(alphanums + "_" + "-") + "]")
+    "[" +
+    Word(alphanums + "_" + "-") +
+    Optional("]" | "," + Word(alphanums + "_" + "-") + "]")
 )
 scalar_type = OneOrMore(Word(alphanums + "_" + "-")) + Optional(scalar_quantifier)
 
@@ -81,15 +79,6 @@ def parse_event_bridge_type(
         if not isinstance(array_inner_type, ScalarTypeMetadata):
             array_type_metadata.array_inner_type = array_inner_type
         return array_type_metadata
-    elif parsed_type.map_type:
-        map_type_metadata = MapTypeMetadata(name=name, parent=parent, type_str=type_str)
-        map_type_metadata.map_key_type = parse_event_bridge_type(
-            results.key, "_map_key", map_type_metadata
-        )
-        map_type_metadata.map_value_type = parse_event_bridge_type(
-            results.type, "_map_value", map_type_metadata
-        )
-        return map_type_metadata
     elif parsed_type.struct_type:
         struct_type_metadata = StructTypeMetadata(
             name=name, parent=parent, type_str=type_str
