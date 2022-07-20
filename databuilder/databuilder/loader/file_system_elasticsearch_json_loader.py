@@ -7,6 +7,8 @@ from pyhocon import ConfigTree
 
 from databuilder.loader.base_loader import Loader
 from databuilder.models.elasticsearch_document import ElasticsearchDocument
+import logging
+LOGGER = logging.getLogger(__name__)
 
 
 class FSElasticsearchJSONLoader(Loader):
@@ -52,7 +54,7 @@ class FSElasticsearchJSONLoader(Loader):
 
         if not isinstance(record, ElasticsearchDocument):
             raise Exception("Record not of type 'ElasticsearchDocument'!")
-
+        LOGGER.info(record.to_json())
         self.file_handler.write(record.to_json())
         self.file_handler.flush()
 

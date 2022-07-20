@@ -28,6 +28,9 @@ from databuilder.models.usage.usage_constants import (
 from databuilder.models.user import User
 from databuilder.serializers.neptune_serializer import METADATA_KEY_PROPERTY_NAME
 
+import logging
+LOGGER = logging.getLogger(__name__)
+
 
 def _table_search_query(graph: GraphTraversalSource, tag_filter: str) -> List[Dict]:
     traversal = graph.V().hasLabel(TableMetadata.TABLE_NODE_LABEL)
@@ -100,6 +103,7 @@ def _table_search_query(graph: GraphTraversalSource, tag_filter: str) -> List[Di
 
 def _user_search_query(graph: GraphTraversalSource, tag_filter: str) -> List[Dict]:
     traversal = graph.V().hasLabel(User.USER_NODE_LABEL)
+    LOGGER.info(graph.V().limit(10).toList())
     traversal = traversal.has(User.USER_NODE_FULL_NAME)
     if tag_filter:
         traversal = traversal.where('published_tag', tag_filter)
