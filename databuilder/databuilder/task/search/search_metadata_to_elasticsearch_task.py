@@ -93,6 +93,7 @@ class SearchMetadatatoElasticasearchTask(Task):
         return f"{self.elasticsearch_alias}_{self.date}_{hex_string}"
 
     def to_document(self, metadata: Any) -> Document:
+        LOGGER.info(metadata)
         return self.document_mapping(_index=self.elasticsearch_new_index, **metadata)
 
     def generate_documents(self, record: Any) -> Generator:
