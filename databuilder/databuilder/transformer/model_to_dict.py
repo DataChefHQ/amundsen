@@ -9,7 +9,7 @@ from pyhocon import ConfigTree
 
 from databuilder.transformer.base_transformer import Transformer
 from databuilder.models.elasticsearch_document import ElasticsearchDocument
-
+import json
 
 LOGGER = logging.getLogger(__name__)
 
@@ -23,7 +23,7 @@ class ModelToDict(Transformer):
         pass
 
     def transform(self, record: ElasticsearchDocument) -> Dict[str, Any]:
-        return record.to_json()
+        return json.loads(record.to_json())
 
     def get_scope(self) -> str:
         return 'transformer.model_to_dict'
