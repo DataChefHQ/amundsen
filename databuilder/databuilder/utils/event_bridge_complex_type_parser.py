@@ -15,7 +15,7 @@ from databuilder.models.type_metadata import (
 array_keyword = Keyword("array")
 struct_keyword = Keyword("struct")
 
-field_name = Word(alphanums + "_")
+field_name = Word(alphanums + "_" + '-')
 field_type = Forward()
 
 # Scalar types: string or string[datetime]
