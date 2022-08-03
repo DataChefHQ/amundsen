@@ -8,7 +8,7 @@ from typing import Any
 from pyhocon import ConfigTree
 
 from databuilder.models.table_metadata import TableMetadata
-from databuilder.models.type_metadata import ScalarTypeMetadata
+from databuilder.models.type_metadata import ScalarTypeMetadata, StructTypeMetadata
 from databuilder.transformer.base_transformer import Transformer
 
 PARSING_FUNCTION = 'parsing_function'
@@ -49,7 +49,8 @@ class ComplexTypeTransformer(Transformer):
             else:
                 self.success_count += 1
                 LOGGER.info(f"parsed {column.name} in table {record.name} to {column.type} and {column.get_type_metadata()}" )
-
+                if isinstance(column.get_type_metadata() , StructTypeMetadata):
+                    LOGGER.info(f'items are : {column.get_type_metadata().struct_items}')
         return record
 
     def get_scope(self) -> str:
