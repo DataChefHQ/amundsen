@@ -48,7 +48,7 @@ class ComplexTypeTransformer(Transformer):
                 LOGGER.warning(f"Could not parse type for column {column.name} in table {record.name}: {e}")
             else:
                 self.success_count += 1
-                LOGGER.INFO(f"parsed {column.name} in table {record.name} to {column.type} and {column.get_type_metadata()}" )
+                LOGGER.info(f"parsed {column.name} in table {record.name} to {column.type} and {column.get_type_metadata()}" )
 
         return record
 
