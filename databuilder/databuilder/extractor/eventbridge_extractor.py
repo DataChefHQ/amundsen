@@ -187,7 +187,7 @@ class EventBridgeExtractor(Extractor):
             return None
 
         return TableMetadata(
-            "eventbridge", registry_name, title, schema_name, description, columns,
+            "hive", registry_name, title, schema_name, description, columns,
         )
 
     @staticmethod
