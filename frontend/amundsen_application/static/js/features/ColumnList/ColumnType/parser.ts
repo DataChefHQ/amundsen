@@ -15,7 +15,7 @@ enum DatabaseId {
   Presto = 'presto',
   Delta = 'delta',
   EventBrdige = 'eventbridge',
-  Glue='glue'
+  Glue='glue',
   Default = 'default',
 }
 const SUPPORTED_TYPES = {
