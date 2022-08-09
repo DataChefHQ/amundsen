@@ -187,7 +187,7 @@ class EventBridgeExtractor(Extractor):
             return None
 
         return TableMetadata(
-            "hive", registry_name, title, schema_name, description, columns,
+            "eventbridge", registry_name.replace('.',''), title, schema_name, description, columns,
         )
 
     @staticmethod
