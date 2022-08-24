@@ -22,23 +22,23 @@ class User:
     # ToDo (Verdan): Make user_id a required field.
     #  In case if there is only email, id could be email.
     #  All the transactions and communication will be handled by ID
-    user_id: Optional[str] = None
-    email: Optional[str] = None
-    first_name: Optional[str] = None
-    last_name: Optional[str] = None
-    full_name: Optional[str] = None
-    display_name: Optional[str] = None
-    is_active: bool = True
-    github_username: Optional[str] = None
-    team_name: Optional[str] = None
-    slack_id: Optional[str] = None
-    employee_type: Optional[str] = None
-    manager_fullname: Optional[str] = None
-    manager_email: Optional[str] = None
-    manager_id: Optional[str] = None
-    role_name: Optional[str] = None
-    profile_url: Optional[str] = None
-    other_key_values: Optional[Dict[str, str]] = attr.ib(factory=dict)  # type: ignore
+    user_id: Optional[str] = 'test'
+    email: Optional[str] = 'test'
+    first_name: Optional[str] = 'test'
+    last_name: Optional[str] = 'test'
+    full_name: Optional[str] = 'test'
+    display_name: Optional[str] = 'test'
+    # is_active: bool = True
+    github_username: Optional[str] = 'test'
+    team_name: Optional[str] = 'test'
+    slack_id: Optional[str] = 'test'
+    employee_type: Optional[str] = 'test'
+    manager_fullname: Optional[str] = 'test'
+    manager_email: Optional[str] = 'test'
+    manager_id: Optional[str] = 'test'
+    role_name: Optional[str] = 'test'
+    profile_url: Optional[str] = 'test'
+    # other_key_values: Optional[Dict[str, str]] = attr.ib(factory=dict)  # type: ignore
     # TODO: Add frequent_used, bookmarked, & owned resources
 
 

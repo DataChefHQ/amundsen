@@ -1422,7 +1422,10 @@ class Neo4jProxy(BaseProxy):
         on MATCH SET %s
         RETURN usr, usr.%s = timestamp() as created
         """ % (user_props, CREATED_EPOCH_MS, user_props, CREATED_EPOCH_MS))
-
+        LOGGER.info("Query:")
+        LOGGER.info(create_update_user_query)
+        LOGGER.info("Data:")
+        LOGGER.info(user_data)
         try:
             tx = self._driver.session(database=self._database_name).begin_transaction()
             result = tx.run(create_update_user_query, user_data)
