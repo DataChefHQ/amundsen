@@ -197,8 +197,8 @@ class Neo4jProxy(BaseProxy):
         collect(distinct badge) as col_badges,
         {node: tm, description: tm_dscrpt, badges: collect(distinct tm_badge)} as tm_results
         RETURN db, clstr, schema, tbl, tbl_dscrpt, col, col_dscrpt, col_stats, col_badges,
-        collect(distinct tm_results) as col_type_metadata
-        ORDER BY col.sort_order;""")
+        collect(distinct tm_results) as col_type_metadata, col.sort_order as sort_num
+        ORDER BY sort_num;""")
 
         tbl_col_neo4j_records = self._execute_cypher_query(
             statement=column_level_query, param_dict={'tbl_key': table_uri})
@@ -316,7 +316,7 @@ class Neo4jProxy(BaseProxy):
         usage_query = textwrap.dedent("""\
         MATCH (user:User)-[read:READ]->(table:Table {key: $tbl_key})
         RETURN user.email as email, read.read_count as read_count, table.name as table_name
-        ORDER BY read.read_count DESC LIMIT 5;
+        ORDER BY read_count DESC LIMIT 5;
         """)
 
         usage_neo4j_records = self._execute_cypher_query(statement=usage_query,
@@ -1630,7 +1630,8 @@ class Neo4jProxy(BaseProxy):
         query = textwrap.dedent("""
         MATCH (user:User {key: $query_key})-[r:READ]->(tbl:Table)
         WHERE EXISTS(r.published_tag) AND r.published_tag IS NOT NULL
-        WITH user, r, tbl ORDER BY r.published_tag DESC, r.read_count DESC LIMIT 50
+        WITH user, r, tbl, r.published_tag as sort_num, r.read_count as sort_count
+        ORDER BY sort_num DESC, sort_count DESC LIMIT 50
         MATCH (tbl:Table)<-[:TABLE]-(schema:Schema)<-[:SCHEMA]-(clstr:Cluster)<-[:CLUSTER]-(db:Database)
         OPTIONAL MATCH (tbl)-[:DESCRIPTION]->(tbl_dscrpt:Description)
         RETURN db, clstr, schema, tbl, tbl_dscrpt
