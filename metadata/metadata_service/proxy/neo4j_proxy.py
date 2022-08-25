@@ -182,6 +182,8 @@ class Neo4jProxy(BaseProxy):
     @timer_with_counter
     def _exec_col_query(self, table_uri: str) -> Tuple:
         # Return Value: (Columns, Last Processed Record)
+        LOGGER.info("URI:")
+        LOGGER.info(table_uri)
 
         column_level_query = textwrap.dedent("""
         MATCH (db:Database)-[:CLUSTER]->(clstr:Cluster)-[:SCHEMA]->(schema:Schema)
