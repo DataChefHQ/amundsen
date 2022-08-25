@@ -200,6 +200,9 @@ class Neo4jProxy(BaseProxy):
         collect(distinct tm_results) as col_type_metadata, col.sort_order as sort_num
         ORDER BY sort_num;""")
 
+        LOGGER.info("Running query:")
+        LOGGER.info(column_level_query)
+
         tbl_col_neo4j_records = self._execute_cypher_query(
             statement=column_level_query, param_dict={'tbl_key': table_uri})
 
