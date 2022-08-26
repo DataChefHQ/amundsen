@@ -254,6 +254,8 @@ class Neo4jProxy(BaseProxy):
         """
         # If there are no Type_Metadata nodes, type_metadata_results will have
         # one object with an empty node value
+        LOGGER.info("type_metadata_results:")
+        LOGGER.info(type_metadata_results)
         if len(type_metadata_results) > 0 and type_metadata_results[0]['node'] is not None:
             sorted_type_metadata = sorted(type_metadata_results, key=lambda x: x['node']['key'])
         else:
