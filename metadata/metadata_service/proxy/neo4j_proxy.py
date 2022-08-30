@@ -244,9 +244,7 @@ class Neo4jProxy(BaseProxy):
 
     def _get_type_metadata(self, type_metadata_results: List) -> Optional[TypeMetadata]:
         """
-        Generates a TypeMetadata object for a column. All columns will have at least
-        one associated type metadata node if the ComplexTypeTransformer is configured
-        to transform table metadata. Otherwise, there will be no type metadata found
+        Generates a TypeMetadata object for a column. The Otherwise, there will be no type metadata found
         and this will return quickly.
 
         :param type_metadata_results: A list of type metadata values for a column
@@ -548,6 +546,9 @@ class Neo4jProxy(BaseProxy):
         :param keys:
         :return:
         """
+        LOGGER.info("DCT:")
+        LOGGER.info(type(dct))
+        LOGGER.info(dct)
         for key in keys:
             dct = dct.get(key)
             if dct is None:
