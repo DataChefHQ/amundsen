@@ -277,7 +277,7 @@ class Neo4jProxy(BaseProxy):
 
             # type_metadata_nodes maps each type metadata path to its corresponding TypeMetadata object
             tm_key_regex = re.compile(
-                r'(?P<db>\w+):\/\/(?P<cluster>\w+)\.(?P<schema>\w+)\/(?P<tbl>\w+)\/(?P<col>\w+)\/type\/(?P<tm_path>.*)'
+                r'(?P<db>\w+):\/\/(?P<cluster>[\w\.-]+)\.(?P<schema>\w+)\/(?P<tbl>\w+)\/(?P<col>[\w-]+)\/type\/(?P<tm_path>.*)'
             )
             tm_key_match = tm_key_regex.search(type_metadata.key)
             if tm_key_match is None:
