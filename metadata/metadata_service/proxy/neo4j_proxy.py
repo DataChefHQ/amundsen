@@ -262,6 +262,9 @@ class Neo4jProxy(BaseProxy):
         type_metadata_nodes: Dict[str, TypeMetadata] = {}
         type_metadata_children: Dict[str, Dict] = {}
         for tm in sorted_type_metadata:
+            if tm['description'] == 'null':
+                tm['description'] = None
+
             tm_node = tm['node']
             description = self._safe_get(tm, 'description', 'description')
             sort_order = self._safe_get(tm_node, 'sort_order') or 0
