@@ -225,7 +225,8 @@ class Neo4jProxy(BaseProxy):
             column_badges = self._make_badges(tbl_col_neo4j_record['col_badges'])
 
             col_type_metadata = self._get_type_metadata(tbl_col_neo4j_record['col_type_metadata'])
-
+            LOGGER.info("Got metadata")
+            LOGGER.info(col_type_metadata)
             last_neo4j_record = tbl_col_neo4j_record
             col = Column(name=tbl_col_neo4j_record['col']['name'],
                          description=self._safe_get(tbl_col_neo4j_record, 'col_dscrpt', 'description'),
@@ -295,9 +296,12 @@ class Neo4jProxy(BaseProxy):
                 node_children[tm_name] = {}
             else:
                 LOGGER.error(f'Could not construct the dict of children for type metadata key {type_metadata.key}')
-
+        LOGGER.info("node_children:")
+        LOGGER.info(node_children)
         # Iterate over the temporary children dict to create the proper TypeMetadata structure
         result = self._build_type_metadata_structure('', type_metadata_children, type_metadata_nodes)
+        LOGGER.info("result:")
+        LOGGER.info(result)
         return result[0] if len(result) > 0 else None
 
     def _build_type_metadata_structure(self, prev_path: str, tm_children: Dict, tm_nodes: Dict) -> List[TypeMetadata]:
