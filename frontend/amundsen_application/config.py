@@ -53,7 +53,7 @@ class Config:
     POPULAR_RESOURCES_PERSONALIZATION = False  # type: bool
 
     # Request Timeout Configurations in Seconds
-    REQUEST_SESSION_TIMEOUT_SEC = 3
+    REQUEST_SESSION_TIMEOUT_SEC = 20
 
     # Frontend Application
     FRONTEND_BASE = ''

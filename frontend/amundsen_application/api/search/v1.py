@@ -22,7 +22,7 @@ from amundsen_application.api.utils.search_utils import (
 
 LOGGER = logging.getLogger(__name__)
 
-REQUEST_SESSION_TIMEOUT_SEC = 3
+REQUEST_SESSION_TIMEOUT_SEC = 20
 
 SEARCH_ENDPOINT = '/v2/search'
 
