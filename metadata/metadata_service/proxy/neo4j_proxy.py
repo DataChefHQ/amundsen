@@ -573,7 +573,12 @@ class Neo4jProxy(BaseProxy):
         try:
             with self._driver.session(database=self._database_name) as session:
                 result = session.run(query=statement, **param_dict)
-                return [record for record in result]
+                a = [record for record in result]
+                LOGGER.info("Final result:")
+                for i in a:
+                    print(i)
+                    print("\n")
+                return a
 
         finally:
             # TODO: Add support on statsd
