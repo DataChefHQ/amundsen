@@ -576,8 +576,8 @@ class Neo4jProxy(BaseProxy):
                 a = [record for record in result]
                 LOGGER.info("Final result:")
                 for i in a:
-                    print(i)
-                    print("\n")
+                    LOGGER.info(i)
+                    LOGGER.info("\n")
                 return a
 
         finally:
