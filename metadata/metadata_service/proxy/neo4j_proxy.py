@@ -589,7 +589,7 @@ class Neo4jProxy(BaseProxy):
         start = time.time()
         try:
             with self._driver.session(database=self._database_name) as session:
-                result = session.run(query=statement, **param_dict)
+                result = [Record(r) for r in session.run(query=statement, **param_dict)]
                 LOGGER.info(result)
                 return result
 
