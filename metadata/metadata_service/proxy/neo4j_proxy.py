@@ -153,7 +153,7 @@ class Neo4jProxy(BaseProxy):
         readers = self._exec_usage_query(table_uri)
 
         wmk_results, table_writer, table_apps, timestamp_value, owners, tags, source, \
-            badges, prog_descs, resource_reports = self._exec_table_query(table_uri)
+        badges, prog_descs, resource_reports = self._exec_table_query(table_uri)
 
         joins, filters = self._exec_table_query_query(table_uri)
 
@@ -418,8 +418,8 @@ class Neo4jProxy(BaseProxy):
 
         resource_reports = self._extract_resource_reports_from_query(table_records.get('resource_reports', []))
 
-        return wmk_results, table_writer, table_apps, timestamp_value, owner_record,\
-            tags, src, badges, prog_descriptions, resource_reports
+        return wmk_results, table_writer, table_apps, timestamp_value, owner_record, \
+               tags, src, badges, prog_descriptions, resource_reports
 
     @timer_with_counter
     def _exec_table_query_query(self, table_uri: str) -> Tuple:
@@ -546,12 +546,16 @@ class Neo4jProxy(BaseProxy):
         :param keys:
         :return:
         """
-        if type(dct) is dict:
-            for key in keys:
-                dct = dct.get(key)
-            return dct
-        else:
-            LOGGER.info("Value %s is not a dict", dct)
+        try:
+            if type(dct) is dict:
+                for key in keys:
+                    dct = dct.get(key)
+                return dct
+            else:
+                return None
+        except AttributeError:
+            LOGGER.error("Value %s is not a dict but a %s", dct, type(dct))
+        finally:
             return None
 
     # @staticmethod
