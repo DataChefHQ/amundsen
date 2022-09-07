@@ -545,11 +545,13 @@ class Neo4jProxy(BaseProxy):
         :param keys:
         :return:
         """
-        for key in keys:
-            dct = dct.get(key)
-            if dct is None:
-                return None
-        return dct
+        if type(dct) is dict:
+            for key in keys:
+                dct = dct.get(key)
+            return dct
+        else:
+            LOGGER.info("Value %s is not a dict", dct)
+            return None
 
     # @staticmethod
     # def convert_null_to_none(dct: Dict[str, Any]) -> Union[Dict[str, Any], List]:
