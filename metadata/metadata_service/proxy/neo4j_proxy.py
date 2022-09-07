@@ -256,6 +256,7 @@ class Neo4jProxy(BaseProxy):
         else:
             return None
 
+        LOGGER.info(sorted_type_metadata)
         type_metadata_nodes: Dict[str, TypeMetadata] = {}
         type_metadata_children: Dict[str, Dict] = {}
         for tm in sorted_type_metadata:
