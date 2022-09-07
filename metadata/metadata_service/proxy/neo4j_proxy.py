@@ -239,7 +239,7 @@ class Neo4jProxy(BaseProxy):
 
         return sorted(cols, key=lambda item: item.sort_order), last_neo4j_record
 
-    def _get_type_metadata(self, type_metadata_results: List) -> Optional[TypeMetadata]:
+    def _get_type_metadata(self, type_metadata_results: List[Record]) -> Optional[TypeMetadata]:
         """
         Generates a TypeMetadata object for a column. All columns will have at least
         one associated type metadata node if the ComplexTypeTransformer is configured
@@ -546,17 +546,15 @@ class Neo4jProxy(BaseProxy):
         :param keys:
         :return:
         """
-        try:
-            if type(dct) is dict:
-                for key in keys:
-                    dct = dct.get(key)
-                return dct
+
+        for key in keys:
+            if type(dct) == dict:
+                dct = dct.get(key)
             else:
-                return None
-        except AttributeError:
-            LOGGER.error("Value %s is not a dict but a %s", dct, type(dct))
-        finally:
-            return None
+                dct = None
+
+        return dct
+
 
     # @staticmethod
     # def convert_null_to_none(dct: Dict[str, Any]) -> Union[Dict[str, Any], List]:
