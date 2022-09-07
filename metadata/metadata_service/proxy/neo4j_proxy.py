@@ -119,6 +119,8 @@ class Neo4jProxy(BaseProxy):
 
         self._driver = GraphDatabase.driver(**driver_args)
 
+        LOGGER.info(self._driver.verify_connectivity())
+
     def health(self) -> health_check.HealthCheck:
         """
         Runs one or more series of checks on the service. Can also
@@ -549,33 +551,33 @@ class Neo4jProxy(BaseProxy):
                 return None
         return dct
 
-    @staticmethod
-    def convert_null_to_none(dct: Dict[str, Any]) -> Union[Dict[str, Any], List]:
-        """
-        A recursive function to change all of the `null` values to `None` in the given dictionary.
-        """
-        result = {}
-
-        # Input may be an empty list
-        if dct == []:
-            return []
-
-        for k, v in dct.items():
-            if isinstance(v, dict):
-                v = Neo4jProxy.convert_null_to_none(v)
-            if isinstance(v, list):
-                v = [Neo4jProxy.convert_null_to_none(i) for i in v]
-            result[k] = None if v == 'null' else v
-        return result
-
-    @staticmethod
-    def change_null_in_record(record: Record) -> Record:
-        """
-        Convert all of the `null` values to `None` inside a neo4j.Record class.
-        This problem occurs when we are using Neo4J proxy with Neptune's OpenCypher as
-        Neptune returns null instead of None.
-        """
-        return neo4j.Record(Neo4jProxy.convert_null_to_none(record.data()))
+    # @staticmethod
+    # def convert_null_to_none(dct: Dict[str, Any]) -> Union[Dict[str, Any], List]:
+    #     """
+    #     A recursive function to change all of the `null` values to `None` in the given dictionary.
+    #     """
+    #     result = {}
+    #
+    #     # Input may be an empty list
+    #     if dct == []:
+    #         return []
+    #
+    #     for k, v in dct.items():
+    #         if isinstance(v, dict):
+    #             v = Neo4jProxy.convert_null_to_none(v)
+    #         if isinstance(v, list):
+    #             v = [Neo4jProxy.convert_null_to_none(i) for i in v]
+    #         result[k] = None if v == 'null' else v
+    #     return result
+    #
+    # @staticmethod
+    # def change_null_in_record(record: Record) -> Record:
+    #     """
+    #     Convert all of the `null` values to `None` inside a neo4j.Record class.
+    #     This problem occurs when we are using Neo4J proxy with Neptune's OpenCypher as
+    #     Neptune returns null instead of None.
+    #     """
+    #     return neo4j.Record(Neo4jProxy.convert_null_to_none(record.data()))
 
     @timer_with_counter
     def _execute_cypher_query(self, *,
@@ -588,7 +590,8 @@ class Neo4jProxy(BaseProxy):
         try:
             with self._driver.session(database=self._database_name) as session:
                 result = session.run(query=statement, **param_dict)
-                return [Neo4jProxy.change_null_in_record(record) for record in result]
+                LOGGER.info(result)
+                return result
 
         finally:
             # TODO: Add support on statsd
